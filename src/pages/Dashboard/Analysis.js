@@ -58,13 +58,13 @@ class Analysis extends PureComponent {
     let errorCount = 0;
     let type;
     for (let i = 0; i < testDataSet.length; i++) {
-      type = this.knn(testDataSet[i], dataSet, 6);
-      console.log(type);
+      type = this.knn(testDataSet[i], dataSet, 10);
+      // console.log(type);
       if (type !== testDataSet[i].Species) {
         ++errorCount;
       }
     }
-    console.log('错误率' + (errorCount / testDataSet.length) * 100 + '%');
+    // console.log('错误率' + (errorCount / testDataSet.length) * 100 + '%');
     this.props.dispatch({
       type: 'datasets/changeFormFields',
       payload: { Species: type },
@@ -204,13 +204,17 @@ class Analysis extends PureComponent {
   calNewValue = (oldValue, maxValue, minValue) => {
     return (oldValue - minValue) / (maxValue - minValue);
   };
-
+  /**
+   * 打开模态框
+   */
   modalClick = () => {
     this.setState({
       modalFlag: true,
     });
   };
-
+  /**
+   * 关闭模态框并清除其中的数据
+   */
   closeModal = () => {
     this.setState({
       modalFlag: false,
@@ -219,18 +223,17 @@ class Analysis extends PureComponent {
       type: 'datasets/replaceFormData',
     });
   };
-
+  /**
+   * 将新建的数据保存
+   */
   save = async () => {
     this.props.dispatch({
       type: 'datasets/updateDataToDatasets',
     });
     this.setState({
       saveFlag: false,
-      modalFlag: false,
     });
-    this.props.dispatch({
-      type: 'datasets/replaceFormData',
-    });
+    this.closeModal();
   };
 
   render() {

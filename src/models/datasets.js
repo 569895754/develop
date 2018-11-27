@@ -18,6 +18,9 @@ export default {
   },
 
   effects: {
+    /**
+     * 初始化数据集
+     */
     *fetchData(_, { put }) {
       const data = [
         {
@@ -1377,6 +1380,9 @@ export default {
         payload: data,
       });
     },
+    /**
+     * 加载表格内的数据
+     */
     *fetchTableData(_, { put, select }) {
       const data = yield select(state => state.datasets.data);
       yield put({
@@ -1384,9 +1390,11 @@ export default {
         payload: data,
       });
     },
+    /**
+     * 加载图表内的数据
+     */
     *fetchChartData(_, { put, select }) {
       const data = yield select(state => state.datasets.data);
-      debugger;
       var SepalData = [],
         PetalData = [];
       for (let i = 0; i < data.length; i++) {
@@ -1442,6 +1450,9 @@ export default {
         payload: { SepalData: SepalData, PetalData: PetalData },
       });
     },
+    /**
+     * 将新的数据更新到数据集与图表中
+     */
     *updateDataToDatasets(_, { put, select }) {
       const formdata = yield select(state => state.datasets.formData);
       var data = yield select(state => state.datasets.data);
@@ -1487,7 +1498,6 @@ export default {
           },
         });
       }
-      debugger;
       data.push({
         id: data.length + 1,
         Sepal_Length: formdata.Sepal_Length?.value,
