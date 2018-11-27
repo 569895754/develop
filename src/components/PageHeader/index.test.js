@@ -3,7 +3,7 @@ import { urlToList } from '../_utils/pathTools';
 
 const routerData = {
   '/dashboard/analysis': {
-    name: '分析页',
+    name: '数据展示',
   },
   '/userinfo': {
     name: '用户列表',
@@ -17,7 +17,7 @@ const routerData = {
 };
 describe('test getBreadcrumb', () => {
   it('Simple url', () => {
-    expect(getBreadcrumb(routerData, '/dashboard/analysis').name).toEqual('分析页');
+    expect(getBreadcrumb(routerData, '/dashboard/analysis').name).toEqual('数据展示');
   });
   it('Parameters url', () => {
     expect(getBreadcrumb(routerData, '/userinfo/2144').name).toEqual('用户信息');

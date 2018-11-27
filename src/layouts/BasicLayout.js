@@ -14,7 +14,6 @@ import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
-import Exception403 from '../pages/Exception/403';
 import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 
@@ -71,6 +70,9 @@ class BasicLayout extends React.PureComponent {
     dispatch({
       type: 'menu/getMenuData',
       payload: { routes, authority },
+    });
+    dispatch({
+      type: 'datasets/fetchData',
     });
   }
 
@@ -204,12 +206,7 @@ class BasicLayout extends React.PureComponent {
             {...this.props}
           />
           <Content style={this.getContentStyle()}>
-            <Authorized
-              authority={routerConfig && routerConfig.authority}
-              noMatch={<Exception403 />}
-            >
-              {children}
-            </Authorized>
+            <Authorized authority={routerConfig && routerConfig.authority}>{children}</Authorized>
           </Content>
           <Footer />
         </Layout>
@@ -232,10 +229,11 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting, menu }) => ({
+export default connect(({ global, setting, menu, datasets }) => ({
   collapsed: global.collapsed,
   layout: setting.layout,
   menuData: menu.menuData,
+  data: datasets.data,
   ...setting,
 }))(props => (
   <Media query="(max-width: 599px)">
