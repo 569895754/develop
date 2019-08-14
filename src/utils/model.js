@@ -63,3 +63,37 @@ export default class Rules {
     return this;
   }
 }
+
+export function searchAllocate(payload, option = {}) {
+  const params = destructuring(payload);
+  try {
+    Object.entries(option).forEach(([name, allocated]) => {
+      let value = params[name];
+      if (value && value.length > 0) {
+        value = [
+          moment(value[0]).format('YYYY-MM-DD HH:mm:SS'),
+          moment(value[1]).format('YYYY-MM-DD HH:mm:SS'),
+          // moment(Date.parse(`${value[0].format('YYYY-MM-DD')} 00:00:00`)),
+          // moment(Date.parse(`${value[1].format('YYYY-MM-DD')} 23:59:59`)),
+        ];
+        // TODO: 数组验证 适用性扩充
+        allocated.forEach((item, el) => {
+          params[item] = value[el];
+        });
+        params[name] = null;
+      }
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('搜索项配置异常!请检查 Effects 配置', e);
+  }
+  return doParseMomentType(params);
+}
+
+export function doParseMomentType(params) {
+  const noParamReassign = params;
+  Object.entries(params).forEach(([key, value]) => {
+    value instanceof moment && (noParamReassign[key] = value.format(MOMENT_PATTERN));
+  });
+  return noParamReassign;
+}
