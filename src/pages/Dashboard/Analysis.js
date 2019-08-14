@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Table, Card, Modal, Button } from 'antd';
 import { formValid } from '../../utils/model';
 import ModalForm from './AnalysisForm';
+import Test from './test'
 
 function bubbleSort(arr) {
   var len = arr.length;
@@ -28,6 +29,7 @@ class Analysis extends PureComponent {
     this.state = {
       modalFlag: false,
       saveFlag: false,
+      tets: {test: {value: 1}}
     };
   }
 
@@ -236,6 +238,12 @@ class Analysis extends PureComponent {
     this.closeModal();
   };
 
+  handleTestChange = (changedFields) => {
+    this.setState(({ tets }) => ({
+      tets: { ...tets, ...changedFields },
+    }));
+  };
+
   render() {
     const { data } = this.props.datasets;
     var dataset = [];
@@ -300,7 +308,9 @@ class Analysis extends PureComponent {
             </div>
           }
         >
-          <ModalForm putFormNode={form => (this.modelFormRefs = form)} />
+          {/* <ModalForm putFormNode={form => (this.modelFormRefs = form)} /> */}
+
+          <Test {...this.state.tets} onChange={this.handleTestChange} />
         </Modal>
       </div>
     );
