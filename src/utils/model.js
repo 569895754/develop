@@ -64,6 +64,9 @@ export default class Rules {
   }
 }
 
+export const destructuring = params =>
+  mapValues(params, item => (isObjectNotMoment(item) ? item.value : item));
+
 export function searchAllocate(payload, option = {}) {
   const params = destructuring(payload);
   try {
