@@ -7,9 +7,13 @@ import { Form, InputNumber, Input, Row, Button } from 'antd';
     },
     mapPropsToFields(props) {
         return {
-          test: Form.createFormField({
-            ...props.test,
-            value: props.test.value,
+          userName: Form.createFormField({
+            ...props.info.userName,
+            value: props.info.userName.value,
+          }),
+          userAccount: Form.createFormField({
+            ...props.info.userAccount,
+            value: props.info.userAccount.value,
           }),
         };
     },
@@ -30,12 +34,15 @@ class Test extends PureComponent {
         const { form } = this.props;
         const { getFieldDecorator } = form;
         return (
-            <div>
-                <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 15 }} label="test">
-                    { getFieldDecorator('test')(<Input />) }
-                </Form.Item>
-              <Button onClick={() => this.handleOk()}>确定</Button>
-            </div>
+          <div>
+            <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 15 }} label="userName">
+              { getFieldDecorator('userName')(<Input />) }
+            </Form.Item>
+            <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 15 }} label="userAccount">
+              { getFieldDecorator('userAccount')(<Input />) }
+            </Form.Item>
+            <Button onClick={() => this.handleOk()}>确定</Button>
+          </div>
         );
     }
 }

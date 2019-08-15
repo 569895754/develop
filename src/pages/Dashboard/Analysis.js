@@ -29,7 +29,8 @@ class Analysis extends PureComponent {
     this.state = {
       modalFlag: false,
       saveFlag: false,
-      tets: {test: {value: 1}},
+      info: {userName: {value: 'xxxxx'},
+              userAccount: {value: 'xxxxxx'}},
       type: ''
     };
   }
@@ -324,7 +325,7 @@ class Analysis extends PureComponent {
         >
           {/* <ModalForm putFormNode={form => (this.modelFormRefs = form)} /> */}
 
-          <Test type={this.state.type} {...this.state.tets} onChange={this.handleTestChange} />
+          <Test type={this.state.type} info={this.state.info} onChange={this.handleTestChange} />
         </Modal>
       </div>
     );
