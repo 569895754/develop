@@ -29,7 +29,8 @@ class Analysis extends PureComponent {
     this.state = {
       modalFlag: false,
       saveFlag: false,
-      tets: {test: {value: 1}}
+      tets: {test: {value: 1}},
+      type: ''
     };
   }
 
@@ -212,6 +213,14 @@ class Analysis extends PureComponent {
   modalClick = () => {
     this.setState({
       modalFlag: true,
+      type: 'add',
+    });
+  };
+
+  update = () => {
+    this.setState({
+      modalFlag: true,
+      type: 'update',
     });
   };
   /**
@@ -286,9 +295,14 @@ class Analysis extends PureComponent {
         <Card
           title="数据展示"
           extra={
-            <Button type="primary" onClick={() => this.modalClick()}>
-              新建
-            </Button>
+            <div>
+              <Button type="primary" onClick={() => this.modalClick()}>
+                新建
+              </Button>
+              <Button type="primary" onClick={() => this.update()}>
+                编辑
+              </Button>
+            </div>
           }
         >
           <Table size="small" rowKey="id" bordered columns={columns} dataSource={data} />
@@ -310,7 +324,7 @@ class Analysis extends PureComponent {
         >
           {/* <ModalForm putFormNode={form => (this.modelFormRefs = form)} /> */}
 
-          <Test {...this.state.tets} onChange={this.handleTestChange} />
+          <Test type={this.state.type} {...this.state.tets} onChange={this.handleTestChange} />
         </Modal>
       </div>
     );
