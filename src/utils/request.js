@@ -81,7 +81,7 @@ export default function request(url, option) {
   const defaultOptions = {
     credentials: 'include',
   };
-  const newOptions = { ...defaultOptions, ...options };
+  const newOptions = { ...defaultOptions, ...options};
   if (
     newOptions.method === 'POST' ||
     newOptions.method === 'PUT' ||
@@ -97,7 +97,7 @@ export default function request(url, option) {
     } else {
       // newOptions.body is FormData
       newOptions.headers = {
-        Accept: 'application/json',
+        Accept: 'application/json; charset=utf-8',
         ...newOptions.headers,
       };
     }

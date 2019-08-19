@@ -37,6 +37,12 @@ export default [
         ],
       },
       {
+        path: '/userList',
+        name: 'userList',
+        icon: 'apple',
+        component: './UserList/UserList',
+      },
+      {
         component: '404',
       },
     ],
