@@ -100,3 +100,21 @@ export function doParseMomentType(params) {
   });
   return noParamReassign;
 }
+
+export async function saveModel(addApi, putApi, params) {
+  if (!params) {
+    return {
+      code: 0,
+      message: '错误！未填写相应字段',
+      data: {},
+    };
+  }
+  const deParams = doParseMomentType(destructuring(params));
+  let response;
+  if (params.id) {
+    response = await putApi(deParams);
+  } else {
+    response = await addApi({ ...deParams, id: undefined });
+  }
+  return response;
+}

@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Card, Table } from 'antd';
+import { Button, Card, Table } from 'antd';
 import { connect } from 'dva';
+import UserListFormModal from './UserListFormModal';
 
 @connect(state => ({
   userList: state.userList,
 }))
+
 class UserList extends PureComponent{
 
   constructor(props) {
@@ -22,6 +24,10 @@ class UserList extends PureComponent{
         title: '性别',
         key: 'sex',
         dataIndex: 'sex'
+      },{
+        title: '操作',
+        width: 150,
+        render: (record) => <Button onClick={() => this.editUser(record)}>编辑</Button>
       }]
     }
   }
@@ -33,18 +39,38 @@ class UserList extends PureComponent{
     });
   }
 
+  closeModal = () => {
+    this.setState({ userModalFlag: false });
+  };
+
+  openUserModal = () => {
+    this.setState({ userModalFlag: true });
+  };
+
+  editUser = (record) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'userList/changeFormFields',
+      payload: record,
+    });
+    this.openUserModal();
+  };
+
   render() {
 
-    const { columns } = this.state;
+    const { columns, userModalFlag } = this.state;
     const { userList: { userList } } = this.props;
     return (
       <Card
         title='用户信息'
+        extra={<Button onClick={() => this.openUserModal()}>新增</Button>}
       >
         <Table
           columns={columns}
           dataSource={userList}
+          bordered
         />
+        { userModalFlag && <UserListFormModal visible={userModalFlag} closeModal={this.closeModal} /> }
       </Card>
     );
   }
